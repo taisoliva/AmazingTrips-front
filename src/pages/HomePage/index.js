@@ -26,7 +26,7 @@ export default function HomePage() {
         if(disableButton === false) setDisabledButton(true)
         else setDisabledButton(false)
 
-        navigate("/tickets")
+        navigate(`/tickets/${selectedOption}`)
     }
 
     return (
@@ -38,7 +38,7 @@ export default function HomePage() {
 
                 <Menu>
                     <Input value={selectedOption} onChange={handleOption}>
-                        <option value=""> {"Pesquisar Locais"}</option>
+                        <option value=""> {"Pesquisar Locais de Destino"}</option>
                         { cities !== undefined && cities.map((item) => <option key={item.id} value={`${item.name}`}>
                                 {`${item.name}, 
                                   ${item.stateName}, 

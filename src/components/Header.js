@@ -11,7 +11,7 @@ export default function Header(){
             <AccessLinks >
                 <Link to="/" > {"Home"} </Link>
                 <Link to="/tickets" > {"Voos"} </Link>
-                <Link to="/home" > {"Hotéis"} </Link>
+                <Link to="/hotels" > {"Hotéis"} </Link>
                 <Link to="/home" > {"Locais"} </Link>
                 
 

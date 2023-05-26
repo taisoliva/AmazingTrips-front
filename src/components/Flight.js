@@ -8,7 +8,7 @@ import dayjs from "dayjs"
 import { Link } from "react-router-dom"
 
 
-export default function Flight({ id, destino, origem, company, departureDate, arrivalDate, price }) {
+export default function Flight({ id, destino, origem, company, departureDate, arrivalDate, price, local }) {
 
     const [logo, setLogo] = useState()
     const dataOrigem = dayjs(departureDate).format('DD/MM/YYYY HH:mm').split(" ")[0]
@@ -24,43 +24,46 @@ export default function Flight({ id, destino, origem, company, departureDate, ar
 
     }, [company])
 
-
+    console.log(local)
 
 
     return (
+        <>
+            {(local === destino || local === undefined) &&
+                <FlightContainer>
+                    <Link>
+                        <Image >
+                            <img src={logo} alt={company} />
+                            <p> {company}</p>
+                        </Image>
 
-            <FlightContainer>
-                <Link>
-                <Image >
-                    <img src={logo} alt={company} />
-                    <p> {company}</p>
-                </Image>
+                        <Container>
+                            <FaPlaneDeparture style={{ color: 'black', marginRight: '10px', fontSize: '30px' }} />
+                            <Text>
+                                <p> {origem} </p>
+                                <p> {dataOrigem}</p>
+                                <p> {horaOrigem} </p>
+                            </Text>
+                        </Container>
 
-                <Container>
-                    <FaPlaneDeparture style={{ color: 'black', marginRight: '10px', fontSize: '30px' }} />
-                    <Text>
-                        <p> {origem} </p>
-                        <p> {dataOrigem}</p>
-                        <p> {horaOrigem} </p>
-                    </Text>
-                </Container>
+                        <Container>
+                            <FaPlaneArrival style={{ color: 'black', marginRight: '10px', fontSize: '30px' }} />
+                            <Text>
+                                <p> {destino} </p>
+                                <p> {dataDestino}</p>
+                                <p> {horaDestino} </p>
+                            </Text>
+                        </Container>
 
-                <Container>
-                    <FaPlaneArrival style={{ color: 'black', marginRight: '10px', fontSize: '30px' }} />
-                    <Text>
-                        <p> {destino} </p>
-                        <p> {dataDestino}</p>
-                        <p> {horaDestino} </p>
-                    </Text>
-                </Container>
-
-                <Container>
-                    <Text>
-                        <p> {`R$ ${price.toFixed(2)}`} </p>
-                    </Text>
-                </Container>
-                </Link>
-            </FlightContainer>
+                        <Container>
+                            <Text>
+                                <p> {`R$ ${price.toFixed(2)}`} </p>
+                            </Text>
+                        </Container>
+                    </Link>
+                </FlightContainer>
+            }
+        </>
     )
 }
 
@@ -122,7 +125,8 @@ const Container = styled.div`
         font-weight: 400;
         display: flex;
         align-items: center;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        text-align: center;
     }
 `
 
