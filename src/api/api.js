@@ -27,12 +27,24 @@ function getPhoto(id){
     return promise
 }
 
+function getPrice(id){
+    const promise = axios.get(`${BASE_URL}/flights/${id}`)
+    return promise
+}
+
+function getFlight(id){
+    const promise = axios.get(`${BASE_URL}/flight/${id}`)
+    return promise
+}
+
 const api = {
     getCities,
     getFlights,
     getHotels,
     getHotel,
-    getPhoto
+    getPhoto,
+    getPrice,
+    getFlight
 }
 
 export default api

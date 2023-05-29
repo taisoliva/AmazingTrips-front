@@ -3,10 +3,15 @@ import Header from "../../components/Header"
 import { HotelContainer, Image, Container} from "./styled"
 import api from "../../api/api"
 import Hotel from "../../components/Hotel"
+import { useNavigate, useParams } from "react-router-dom"
 
 export default function HotelPage() {
 
     const [hotels, setHotels] = useState()
+    const {destino} = useParams()
+    const navigate = useNavigate()
+
+    console.log(destino)
 
     useEffect(()=>{
         const promise = api.getHotels()
@@ -20,13 +25,16 @@ export default function HotelPage() {
             <Image>
                 <Header />
                 <Container>
-                { hotels !== undefined &&
+                { (hotels !== undefined) &&
                     hotels.map(item => <Hotel key={item.id}
                                               id={item.id}
                                               name={item.Name}
                                               descricao={item.Descrição}
                                               url={item.url}
                                               price={item.price}
+                                              destino={destino}
+                                              local={item.name}
+                                             
                     />)
                 }
 

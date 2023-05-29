@@ -12,9 +12,6 @@ export default function Header(){
                 <Link to="/" > {"Home"} </Link>
                 <Link to="/tickets" > {"Voos"} </Link>
                 <Link to="/hotels" > {"Hotéis"} </Link>
-                <Link to="/home" > {"Locais"} </Link>
-                
-
             </AccessLinks>
         </Barra>
     )

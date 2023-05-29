@@ -2,16 +2,19 @@ import styled from "styled-components"
 import Header from "./Header"
 import sol from "../assets/sol.jpg"
 import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import api from "../api/api"
+import { FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa"
+
 
 export default function ItemHotel() {
 
-    const {id} = useParams()
+    const { id } = useParams()
     const [items, setItems] = useState()
     const [photos, setPhotos] = useState()
-  
-    useEffect(()=>{
+    const contentRef = useRef(null)
+
+    useEffect(() => {
         const promise = api.getHotel(id)
         promise.then(res => setItems(res.data))
         promise.catch(err => console.log(err))
@@ -19,10 +22,20 @@ export default function ItemHotel() {
         const promise2 = api.getPhoto(id)
         promise2.then(res => setPhotos(res.data))
         promise2.catch(err => console.log(err))
-        
-    },[])
 
-    console.log(photos)
+    }, [])
+
+    function scrollRight() {
+        if (contentRef.current) {
+            contentRef.current.scrollLeft += 100; // ajuste o valor conforme necessário
+        }
+    }
+
+    function scrollLeft(){
+        if(contentRef.current){
+            contentRef.current.scrollLeft -= 100;
+        }
+    }
 
     return (
         <HotelContainer>
@@ -30,16 +43,24 @@ export default function ItemHotel() {
             <Image>
                 <Header />
                 <Container>
-                    <ContainerPhoto>
-                        {photos !== undefined && photos.map (item => <img src={item.url}/>)}
+                    <IconeEsquerda onClick={scrollLeft}>
+                        <FaArrowCircleLeft style={{ color: 'black', marginRight: '10px', fontSize: '30px' }} />
+                    </IconeEsquerda>
+                    <ContainerPhoto ref={contentRef}>
+                        {photos !== undefined && photos.map(item => <img src={item.url} />)}
                     </ContainerPhoto>
-                {
-                    items!== undefined && <ul>
+                    <IconeDireita onClick={scrollRight}>
+                        <FaArrowCircleRight style={{ color: 'black', marginRight: '10px', fontSize: '30px' }} />
+                    </IconeDireita>
+
+                    <p>{"Comodidades"}</p>
+                    {
+                        items !== undefined && <ul>
                             {items.map(item => <li>
                                 {item.name}
                             </li>)}
-                    </ul>
-                }
+                        </ul>
+                    }
 
                 </Container>
             </Image>
@@ -65,24 +86,50 @@ const Image = styled.div`
     background-position: center;
 `
 
+
 const Container = styled.div`
 
     width: 50vw;
     height: 70vh;
-    background-color: rgba(255,228,181, 0.4);
+    background-color: rgba(255,228,181, 0.7);
     margin: 10vh auto;
     display: flex;
     flex-direction: column;
     overflow: auto;
 
+    p{
+        margin-top: 20px;
+        font-style: normal;
+        font-family: 'Roboto';
+        font-size: 23px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        margin-bottom: 10px;
+        text-decoration: underline;
+    }
+
+    li{
+        margin-top: 20px;
+       font-style: normal;
+        font-family: 'Roboto';
+        font-size: 20px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        margin-bottom: 10px;
+}
+
 `
 
 const ContainerPhoto = styled.div`
 
-    background-color: yellow;
     height: 30vh;
     display:flex;
     padding: 10px;
+    background-color: rgb(210, 105, 30,0.6);
 
     img{
         width: 200px;
@@ -96,6 +143,28 @@ const ContainerPhoto = styled.div`
         border-radius: 20px;
     }
 
-    overflow: auto;
+    overflow: hidden;
+    position: relative;
     
+`
+const IconeDireita = styled.div`
+    z-index: 1;
+    position: absolute;
+    width: 2vw;
+    height: 3vh;
+    top:30vh;
+    right: 27vw;
+    border-radius: 100px;
+    box-shadow: 0 0 20px 5px #ffffff;
+`
+
+const IconeEsquerda = styled.div`
+    z-index: 1;
+    position: absolute;
+    width: 2vw;
+    height: 3vh;
+    top:30vh;
+    left: 27vw;
+    border-radius: 100px;
+    box-shadow: 0 0 20px 5px #ffffff;
 `

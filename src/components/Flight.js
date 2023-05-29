@@ -8,7 +8,7 @@ import dayjs from "dayjs"
 import { Link } from "react-router-dom"
 
 
-export default function Flight({ id, destino, origem, company, departureDate, arrivalDate, price, local }) {
+export default function Flight({ id, destino, origem, company, departureDate, arrivalDate, price, local, min, max }) {
 
     const [logo, setLogo] = useState()
     const dataOrigem = dayjs(departureDate).format('DD/MM/YYYY HH:mm').split(" ")[0]
@@ -24,14 +24,11 @@ export default function Flight({ id, destino, origem, company, departureDate, ar
 
     }, [company])
 
-    console.log(local)
-
-
     return (
         <>
             {(local === destino || local === undefined) &&
                 <FlightContainer>
-                    <Link>
+                    <Link to={`/destino/${id}`}>
                         <Image >
                             <img src={logo} alt={company} />
                             <p> {company}</p>
@@ -75,6 +72,7 @@ const FlightContainer = styled.div`
     background-color: rgba(255, 255, 255, 0.8);
 
     padding: 10px;
+    margin-top: 2vh;
 
     display: flex;
     align-items: center;

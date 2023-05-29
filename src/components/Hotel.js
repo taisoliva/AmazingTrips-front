@@ -1,20 +1,25 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-export default function Hotel({ id, name, descricao, url, price }) {
+export default function Hotel({ id, name, descricao, url, price, destino, local }) {
     return (
-        <Item>
-            <Link to={`/hotels/${id}`}>
-                <Imagem url={url} />
-                <Text>
-                    <h1> {name}</h1>
-                    <p> {descricao}</p>
-                </Text>
-                <Text>
-                    <h2>{`R$ ${price.toFixed(2)}`}</h2>
-                    <p> {"Preço por Noite"}</p>
-                </Text>
-            </Link>
-        </Item>
+
+        <>
+            {
+                (destino === local) && <Item>
+                    <Link to={`/hotel/${id}`}>
+                        <Imagem url={url} />
+                        <Text>
+                            <h1> {name}</h1>
+                            <p> {descricao}</p>
+                        </Text>
+                        <Text>
+                            <h2>{`R$ ${price.toFixed(2)}`}</h2>
+                            <p> {"Preço por Noite"}</p>
+                        </Text>
+                    </Link>
+                </Item>
+            }
+        </>
     )
 }
 
